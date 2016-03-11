@@ -19,19 +19,7 @@ class Person:
         # print "my HP is %s" % self.health_point
         print self.name + "'s HP is " + str(self.health_point) + "."
 
-
-
-if __name__ == "__main__":
-    p1 = raw_input("Player1:")
-    p2 = raw_input("Player2:")
-    player_1 = Person()
-    player_2 = Person()
-    player_1.set_name(p1)
-    player_2.set_name(p2)
-    player_1.get_health_point()
-    player_2.get_health_point()
-    #player_1.my_message()
-    #player_2.my_message()
+def fight(player_1,player_2):
     while player_1.health_point > 0 and player_2.health_point > 0:
         attack = random.randint(0, 599)
         print player_1.name + ' causes ' + str(attack) + ' point damage to ' + player_2.name
@@ -45,4 +33,20 @@ if __name__ == "__main__":
         print player_2.name + ' wins!! The ramaining blood is ' + str(player_2.health_point)
     if player_2.health_point < 0:
         print player_1.name + ' wins!! The ramaining blood is ' + str(player_1.health_point)
+
+
+
+
+if __name__ == "__main__":
+    p1 = raw_input("Player1:")
+    p2 = raw_input("Player2:")
+    player_1 = Person()
+    player_2 = Person()
+    player_1.set_name(p1)
+    player_2.set_name(p2)
+    player_1.get_health_point()
+    player_2.get_health_point()
+    #player_1.my_message()
+    #player_2.my_message()
+    fight(player_1, player_2)
 
