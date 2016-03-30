@@ -36,6 +36,9 @@ class timer(threading.Thread):
     def stop(self):
         self.thread_stop = True
 
+flag = 1
+lock = threading.Lock()
+# 控制两个进程同时结束
 class chatic_fight(threading.Thread ):
     def __init__(self, fighter, accepter):
         self.fighter = fighter
@@ -45,13 +48,20 @@ class chatic_fight(threading.Thread ):
         self.thread_stop = False
 
     def run(self):
-        while(self.accepter.health_point > 0):
+        global flag
+        while(self.accepter.health_point > 0 and flag == 1):
             time.sleep(1)
             attack = random.randint(0, 599)
             self.accepter.health_point = self.accepter.health_point - attack
             print self.fighter.name +' causes ' + str(attack) + ' point damage to' + self.accepter.name + '. The remain hp is about ' + str(self.accepter.health_point)
-        print '='*10 + self.fighter.name + ' wins!'
-        self.thread_stop()
+        if lock.acquire():
+            if(flag == 1):
+                print '='*10 + self.fighter.name + ' wins!'
+                flag = 0
+            else:
+                print 'QAQ!~'
+            lock.release()
+            self.thread_stop()
 
     def stop(self):
         self.thread_stop = True
